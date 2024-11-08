@@ -1,7 +1,7 @@
 import DeleteIcon from "./Icons/DeleteIcon";
 import EditIcon from "./Icons/EditIcon";
 
-export default function CardItem({ item }) {
+export default function CardItem({ item, deleteItemHandler }) {
   return (
     <div className="flex justify-between items-center py-2 relative group cursor-pointer">
       <div>
@@ -25,7 +25,14 @@ export default function CardItem({ item }) {
             <EditIcon />
           </button>
 
-          <button className="hover:text-red-600" role="button" title="Delete">
+          <button
+            onClick={() => {
+              deleteItemHandler(item);
+            }}
+            className="hover:text-red-600"
+            role="button"
+            title="Delete"
+          >
             <DeleteIcon />
           </button>
         </div>

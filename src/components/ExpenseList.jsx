@@ -1,7 +1,7 @@
 import CardItem from "./CardItem";
 import ExpenseHeader from "./ExpenseHeader";
 
-export default function ExpenseList({ expenseList }) {
+export default function ExpenseList({ expenseList, deleteItemHandler }) {
   return (
     <div className="border rounded-md">
       {/* <!-- Header --> */}
@@ -10,8 +10,13 @@ export default function ExpenseList({ expenseList }) {
         {/* <!-- Expense Row 1 --> */}
 
         {expenseList.map((item) => {
-          console.log(item);
-          return <CardItem key={item.id} item={item} />;
+          return (
+            <CardItem
+              key={item.id}
+              item={item}
+              deleteItemHandler={deleteItemHandler}
+            />
+          );
         })}
       </div>
     </div>

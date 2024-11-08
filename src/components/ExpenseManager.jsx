@@ -35,6 +35,17 @@ export default function ExpenseManager() {
     });
   }
 
+  function deleteItemHandler(item) {
+    const newDataList = listData[item.stateType].filter(
+      (a) => a.id !== item.id
+    );
+
+    setListData({
+      ...listData,
+      [item.stateType]: newDataList,
+    });
+  }
+
   return (
     <main className="relative mx-auto mt-10 w-full max-w-7xl">
       <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -44,13 +55,19 @@ export default function ExpenseManager() {
         {/* <!-- Right Column --> */}
         <div className="lg:col-span-2">
           {/* <!-- Total Balance Stat--> */}
-          <Summary />
+          <Summary listData={listData} />
           {/* <!-- List Down --> */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-8">
             {/* <!-- Income --> */}
-            <IncomeList incomeList={listData.income} />
+            <IncomeList
+              incomeList={listData.income}
+              deleteItemHandler={deleteItemHandler}
+            />
             {/* <!-- Expense --> */}
-            <ExpenseList expenseList={listData.expense} />
+            <ExpenseList
+              expenseList={listData.expense}
+              deleteItemHandler={deleteItemHandler}
+            />
           </div>
         </div>
       </section>

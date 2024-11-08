@@ -1,7 +1,7 @@
 import CardItem from "./CardItem";
 import IncomeHeader from "./IncomeHeader";
 
-export default function IncomeList({ incomeList }) {
+export default function IncomeList({ incomeList, deleteItemHandler }) {
   return (
     <div className="border rounded-md relative">
       {/* <!-- Header --> */}
@@ -11,7 +11,13 @@ export default function IncomeList({ incomeList }) {
         {/* <!-- Row --> */}
 
         {incomeList.map((item) => {
-          return <CardItem key={item.id} item={item} />;
+          return (
+            <CardItem
+              key={item.id}
+              item={item}
+              deleteItemHandler={deleteItemHandler}
+            />
+          );
         })}
       </div>
     </div>
