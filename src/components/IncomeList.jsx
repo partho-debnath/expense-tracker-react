@@ -5,11 +5,12 @@ export default function IncomeList({
   incomeList,
   deleteItemHandler,
   editItemHandler,
+  sortByAmount,
 }) {
   return (
     <div className="border rounded-md relative">
       {/* <!-- Header --> */}
-      <IncomeHeader />
+      <IncomeHeader sortByAmount={sortByAmount} />
 
       <div className="p-4 divide-y">
         {/* <!-- Row --> */}

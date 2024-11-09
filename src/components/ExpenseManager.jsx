@@ -63,6 +63,24 @@ export default function ExpenseManager() {
     });
   }
 
+  function sortByAmount(stateType, orderBy) {
+    let sortedList = [];
+    if (orderBy === "ASCENDING") {
+      sortedList = listData[stateType].sort(function (item1, item2) {
+        return item1.amount - item2.amount;
+      });
+    } else {
+      sortedList = listData[stateType].sort(function (item1, item2) {
+        return item2.amount - item1.amount;
+      });
+    }
+
+    setListData({
+      ...listData,
+      [stateType]: sortedList,
+    });
+  }
+
   return (
     <main className="relative mx-auto mt-10 w-full max-w-7xl">
       <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -85,12 +103,14 @@ export default function ExpenseManager() {
               incomeList={listData.income}
               deleteItemHandler={deleteItemHandler}
               editItemHandler={editItemHandler}
+              sortByAmount={sortByAmount}
             />
             {/* <!-- Expense --> */}
             <ExpenseList
               expenseList={listData.expense}
               deleteItemHandler={deleteItemHandler}
               editItemHandler={editItemHandler}
+              sortByAmount={sortByAmount}
             />
           </div>
         </div>

@@ -5,11 +5,12 @@ export default function ExpenseList({
   expenseList,
   deleteItemHandler,
   editItemHandler,
+  sortByAmount,
 }) {
   return (
     <div className="border rounded-md">
       {/* <!-- Header --> */}
-      <ExpenseHeader />
+      <ExpenseHeader sortByAmount={sortByAmount} />
       <div className="p-4 divide-y">
         {/* <!-- Expense Row 1 --> */}
 
