@@ -1,6 +1,10 @@
 import { useState } from "react";
 
-export default function InputForm({ handleAddItem }) {
+export default function InputForm({
+  handleAddItem,
+  editData,
+  saveEditItemHandler,
+}) {
   const categories = {
     expense: [
       "Education",
@@ -15,17 +19,23 @@ export default function InputForm({ handleAddItem }) {
     income: ["Salary", "Outsourcing", "Bond", "Dividend"],
   };
 
-  const [formState, setFormState] = useState({
-    id: crypto.randomUUID(),
-    stateType: "expense",
-    category: categories["expense"][0],
-    amount: "",
-    date: "",
-  });
+  const [formState, setFormState] = useState(
+    editData ?? {
+      id: crypto.randomUUID(),
+      stateType: "expense",
+      category: categories["expense"][0],
+      amount: "",
+      date: "",
+    }
+  );
 
   function handleSubmit(e) {
     e.preventDefault();
-    handleAddItem(formState);
+    if (Object.is(editData, null) === false) {
+      saveEditItemHandler(formState);
+    } else {
+      handleAddItem(formState);
+    }
     resetFormState(formState.stateType);
   }
 

@@ -1,7 +1,11 @@
 import CardItem from "./CardItem";
 import IncomeHeader from "./IncomeHeader";
 
-export default function IncomeList({ incomeList, deleteItemHandler }) {
+export default function IncomeList({
+  incomeList,
+  deleteItemHandler,
+  editItemHandler,
+}) {
   return (
     <div className="border rounded-md relative">
       {/* <!-- Header --> */}
@@ -16,6 +20,7 @@ export default function IncomeList({ incomeList, deleteItemHandler }) {
               key={item.id}
               item={item}
               deleteItemHandler={deleteItemHandler}
+              editItemHandler={editItemHandler}
             />
           );
         })}

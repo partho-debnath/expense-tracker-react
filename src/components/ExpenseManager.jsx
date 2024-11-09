@@ -27,6 +27,7 @@ export default function ExpenseManager() {
   };
 
   const [listData, setListData] = useState(initialData);
+  const [editData, setEditData] = useState(null);
 
   function addNewItemHandler(item) {
     setListData({
@@ -46,11 +47,32 @@ export default function ExpenseManager() {
     });
   }
 
+  function editItemHandler(item) {
+    setEditData({ ...item });
+  }
+
+  function saveEditItemHandler(updatedItem) {
+    setEditData(null);
+    let index = listData[updatedItem.stateType].findIndex(
+      (item) => item.id === updatedItem.id
+    );
+    listData[updatedItem.stateType][index] = updatedItem;
+
+    setListData({
+      ...listData,
+    });
+  }
+
   return (
     <main className="relative mx-auto mt-10 w-full max-w-7xl">
       <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {/* <!-- Submission Form --> */}
-        <InputForm handleAddItem={addNewItemHandler} />
+        <InputForm
+          key={editData?.id}
+          handleAddItem={addNewItemHandler}
+          editData={editData}
+          saveEditItemHandler={saveEditItemHandler}
+        />
 
         {/* <!-- Right Column --> */}
         <div className="lg:col-span-2">
@@ -62,11 +84,13 @@ export default function ExpenseManager() {
             <IncomeList
               incomeList={listData.income}
               deleteItemHandler={deleteItemHandler}
+              editItemHandler={editItemHandler}
             />
             {/* <!-- Expense --> */}
             <ExpenseList
               expenseList={listData.expense}
               deleteItemHandler={deleteItemHandler}
+              editItemHandler={editItemHandler}
             />
           </div>
         </div>

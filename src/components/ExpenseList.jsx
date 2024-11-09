@@ -1,7 +1,11 @@
 import CardItem from "./CardItem";
 import ExpenseHeader from "./ExpenseHeader";
 
-export default function ExpenseList({ expenseList, deleteItemHandler }) {
+export default function ExpenseList({
+  expenseList,
+  deleteItemHandler,
+  editItemHandler,
+}) {
   return (
     <div className="border rounded-md">
       {/* <!-- Header --> */}
@@ -15,6 +19,7 @@ export default function ExpenseList({ expenseList, deleteItemHandler }) {
               key={item.id}
               item={item}
               deleteItemHandler={deleteItemHandler}
+              editItemHandler={editItemHandler}
             />
           );
         })}
