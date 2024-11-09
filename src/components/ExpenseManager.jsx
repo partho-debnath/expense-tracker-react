@@ -25,6 +25,19 @@ export default function ExpenseManager() {
       // },
     ],
   };
+  const categories = {
+    expense: [
+      "Education",
+      "Food",
+      "Health",
+      "Bill",
+      "Insurance",
+      "Tax",
+      "Transport",
+      "Telephone",
+    ],
+    income: ["Salary", "Outsourcing", "Bond", "Dividend"],
+  };
 
   const [listData, setListData] = useState(initialData);
   const [editData, setEditData] = useState(null);
@@ -81,12 +94,24 @@ export default function ExpenseManager() {
     });
   }
 
+  function applyFilters(stateType, filters) {
+    let filteredData = listData[stateType].filter((item) =>
+      filters.includes(item.category)
+    );
+
+    setListData({
+      ...listData,
+      [stateType]: filteredData,
+    });
+  }
+
   return (
     <main className="relative mx-auto mt-10 w-full max-w-7xl">
       <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {/* <!-- Submission Form --> */}
         <InputForm
           key={editData?.id}
+          categories={categories}
           handleAddItem={addNewItemHandler}
           editData={editData}
           saveEditItemHandler={saveEditItemHandler}
@@ -104,6 +129,8 @@ export default function ExpenseManager() {
               deleteItemHandler={deleteItemHandler}
               editItemHandler={editItemHandler}
               sortByAmount={sortByAmount}
+              categories={categories.income}
+              applyFilters={applyFilters}
             />
             {/* <!-- Expense --> */}
             <ExpenseList
@@ -111,6 +138,8 @@ export default function ExpenseManager() {
               deleteItemHandler={deleteItemHandler}
               editItemHandler={editItemHandler}
               sortByAmount={sortByAmount}
+              categories={categories.expense}
+              applyFilters={applyFilters}
             />
           </div>
         </div>

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import FilterIcon from "./Icons/FilterIcon";
 import SortingDropDown from "./SortingDropDown";
+import updateFilters from "../utils/utils";
 
 function Icon() {
   return (
@@ -23,12 +24,22 @@ function Icon() {
   );
 }
 
-function IncomeFilteringDropDown({ filterVisibleState, handelDropDown }) {
+function IncomeFilteringDropDown({
+  filterVisibleState,
+  handelDropDown,
+  categories,
+  applyFilters,
+}) {
+  const [filtersState, setFiltersState] = useState([]);
+
   return (
     <div className="relative inline-block text-left">
       <div>
         <button
           onClick={() => {
+            if (!filterVisibleState.filterDropDownIsVisible === false) {
+              setFiltersState([]);
+            }
             handelDropDown({
               filterDropDownIsVisible:
                 !filterVisibleState.filterDropDownIsVisible,
@@ -55,39 +66,30 @@ function IncomeFilteringDropDown({ filterVisibleState, handelDropDown }) {
           id="filter-dropdown"
         >
           <div className="py-1" role="none">
-            <label className="inline-flex items-center px-4 py-2 text-sm text-gray-700">
-              <input
-                type="checkbox"
-                className="form-checkbox h-4 w-4 rounded-md text-gray-600"
-                id="filter-option-1"
-              />
-              <span className="ml-2">Salary</span>
-            </label>
-            <label className="inline-flex items-center px-4 py-2 text-sm text-gray-700">
-              <input
-                type="checkbox"
-                className="form-checkbox h-4 w-4 rounded-md text-gray-600"
-                id="filter-option-2"
-              />
-              <span className="ml-2">Outsourcing</span>
-            </label>
-            <label className="inline-flex items-center px-4 py-2 text-sm text-gray-700">
-              <input
-                type="checkbox"
-                className="form-checkbox h-4 w-4 rounded-md text-gray-600"
-                id="filter-option-3"
-              />
-              <span className="ml-2">Bond</span>
-            </label>
-
-            <label className="inline-flex items-center px-4 py-2 text-sm text-gray-700">
-              <input
-                type="checkbox"
-                className="form-checkbox h-4 w-4 rounded-md text-gray-600"
-                id="filter-option-3"
-              />
-              <span className="ml-2">Dividend</span>
-            </label>
+            {categories.map((item) => {
+              return (
+                <label
+                  key={item}
+                  className="inline-flex items-center px-4 py-2 text-sm text-gray-700"
+                >
+                  <input
+                    onClick={(e) => {
+                      let newFilterList = updateFilters(
+                        e.target.checked,
+                        item,
+                        filtersState
+                      );
+                      setFiltersState([...newFilterList]);
+                      applyFilters("income", newFilterList);
+                    }}
+                    type="checkbox"
+                    className="form-checkbox h-4 w-4 rounded-md text-gray-600"
+                    id="filter-option-1"
+                  />
+                  <span className="ml-2">{item}</span>
+                </label>
+              );
+            })}
           </div>
         </div>
       )}
@@ -95,7 +97,11 @@ function IncomeFilteringDropDown({ filterVisibleState, handelDropDown }) {
   );
 }
 
-export default function IncomeHeader({ sortByAmount }) {
+export default function IncomeHeader({
+  sortByAmount,
+  categories,
+  applyFilters,
+}) {
   const [filterVisibleState, setFilterVisibleState] = useState({
     sortingDropDownIsVisible: false,
     filterDropDownIsVisible: false,
@@ -132,6 +138,8 @@ export default function IncomeHeader({ sortByAmount }) {
         <IncomeFilteringDropDown
           filterVisibleState={filterVisibleState}
           handelDropDown={handelDropDown}
+          categories={categories}
+          applyFilters={applyFilters}
         />
       </div>
     </div>

@@ -1,23 +1,24 @@
 import { useState } from "react";
 
 export default function InputForm({
+  categories,
   handleAddItem,
   editData,
   saveEditItemHandler,
 }) {
-  const categories = {
-    expense: [
-      "Education",
-      "Food",
-      "Health",
-      "Bill",
-      "Insurance",
-      "Tax",
-      "Transport",
-      "Telephone",
-    ],
-    income: ["Salary", "Outsourcing", "Bond", "Dividend"],
-  };
+  // const categories = {
+  //   expense: [
+  //     "Education",
+  //     "Food",
+  //     "Health",
+  //     "Bill",
+  //     "Insurance",
+  //     "Tax",
+  //     "Transport",
+  //     "Telephone",
+  //   ],
+  //   income: ["Salary", "Outsourcing", "Bond", "Dividend"],
+  // };
 
   const [formState, setFormState] = useState(
     editData ?? {
